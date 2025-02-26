@@ -110,6 +110,15 @@ public:
         return &led;
     }
 
+    /**
+     * @brief Retrieves the audio codec based on the defined I2S method.
+     *
+     * This method returns a pointer to an AudioCodec instance. Depending on whether
+     * AUDIO_I2S_METHOD_SIMPLEX is defined, it will return either a simplex or duplex
+     * audio codec configuration.
+     *
+     * @return A pointer to the AudioCodec instance.
+     */
     virtual AudioCodec* GetAudioCodec() override {
 #ifdef AUDIO_I2S_METHOD_SIMPLEX
         static NoAudioCodecSimplex audio_codec(AUDIO_INPUT_SAMPLE_RATE, AUDIO_OUTPUT_SAMPLE_RATE,
