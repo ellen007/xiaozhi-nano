@@ -9,46 +9,46 @@
 #define AUDIO_OUTPUT_SAMPLE_RATE 24000
 
 //normal pins main
-#define BOOT_BUTTON_GPIO        GPIO_NUM_0   //boot 打断对话
-#define POWER_ADC_PIN           GPIO_NUM_8   //电源电压
-#define TOUCH_BUTTON_GPIO       GPIO_NUM_1   //预留的touch 
-#define BUILTIN_LED_GPIO        GPIO_NUM_21  //电源指示灯？ 预留的 还没做电路
+#define BOOT_BUTTON_GPIO         GPIO_NUM_0   //boot 打断对话
+#define POWER_ADC_PIN            GPIO_NUM_8   //电源电压
+#define TOUCH_BUTTON_GPIO        GPIO_NUM_1   //预留的touch 
+#define BUILTIN_LED_GPIO         GPIO_NUM_21  //电源指示灯？ 预留的 还没做电路
 
 
 //normal pins
-#define VOLUME_UP_BUTTON_GPIO   GPIO_NUM_40 //音量加
-#define VOLUME_DOWN_BUTTON_GPIO GPIO_NUM_39 //音量减
-#define RGB_LED_GPIO            GPIO_NUM_45 //RGB灯
+#define VOLUME_UP_BUTTON_GPIO    GPIO_NUM_40  //音量加
+#define VOLUME_DOWN_BUTTON_GPIO  GPIO_NUM_39  //音量减
+#define RGB_LED_GPIO             GPIO_NUM_45  //RGB灯
 
 
-#define AUDIO_I2S_GPIO_MCLK GPIO_NUM_6       // IO6
-#define AUDIO_I2S_GPIO_WS   GPIO_NUM_12      // IO12 对应 LRCK
-#define AUDIO_I2S_GPIO_BCLK GPIO_NUM_14      // IO14 对应 SCLK
-#define AUDIO_I2S_GPIO_DIN  GPIO_NUM_11      // IO11 对应 DIN
-#define AUDIO_I2S_GPIO_DOUT GPIO_NUM_13      // IO13 对应 DOUT
+#define AUDIO_I2S_GPIO_MCLK      GPIO_NUM_6   // IO6 对应 MCLK
+#define AUDIO_I2S_GPIO_WS        GPIO_NUM_12  // IO12 对应 LRCK
+#define AUDIO_I2S_GPIO_BCLK      GPIO_NUM_14  // IO14 对应 SCLK
+#define AUDIO_I2S_GPIO_DIN       GPIO_NUM_11  // IO11 对应 DIN
+#define AUDIO_I2S_GPIO_DOUT      GPIO_NUM_13  // IO13 对应 DOUT
 
 //音频编解码 I2C 接口（ES8311）
-#define AUDIO_CODEC_I2C_SDA_PIN  GPIO_NUM_5
-#define AUDIO_CODEC_I2C_SCL_PIN  GPIO_NUM_4
-#define AUDIO_CODEC_PA_PIN       GPIO_NUM_2  // 放大器开关
+#define AUDIO_CODEC_I2C_SDA_PIN  GPIO_NUM_5   // IO05 对应SDA
+#define AUDIO_CODEC_I2C_SCL_PIN  GPIO_NUM_4   // IO04 对应SCL
+#define AUDIO_CODEC_PA_PIN       GPIO_NUM_2   // IO02 对应CTRL  放大器开关
 
-#define AUDIO_CODEC_ES8311_ADDR  ES8311_CODEC_DEFAULT_ADDR
+#define AUDIO_CODEC_ES8311_ADDR  ES8311_CODEC_DEFAULT_ADDR  // 对ES8311芯片的I2C地址
 
 
 // SD Card pins
-#define SD_CMD_PIN             GPIO_NUM_10
-#define SD_CLK_PIN             GPIO_NUM_9
-#define SD_D0_PIN              GPIO_NUM_46
-#define SD_D1_PIN              GPIO_NUM_3
-#define SD_D2_PIN              GPIO_NUM_37
-#define SD_D3_PIN              GPIO_NUM_38
+#define SD_CMD_PIN              GPIO_NUM_10  // IO10  对应CMD
+#define SD_CLK_PIN              GPIO_NUM_9   // IO09  对应CLK
+#define SD_D0_PIN               GPIO_NUM_46  // IO46  对应D0
+#define SD_D1_PIN               GPIO_NUM_3   // IO03  对应D1
+#define SD_D2_PIN               GPIO_NUM_37  // IO37  对应D2
+#define SD_D3_PIN               GPIO_NUM_38  // IO38  对应D3
 
 //LCD pins
-#define DISPLAY_SPI_DC_PIN      GPIO_NUM_7    // IO7
-#define DISPLAY_SPI_CS_PIN      GPIO_NUM_15   // IO15
-#define DISPLAY_SPI_SCLK_PIN    GPIO_NUM_16   // IO16
-#define DISPLAY_SPI_MOSI_PIN    GPIO_NUM_17   // IO17
-#define DISPLAY_SPI_RESET_PIN   GPIO_NUM_18   // IO18
+#define DISPLAY_SPI_DC_PIN      GPIO_NUM_7    // IO7  对应DC
+#define DISPLAY_SPI_CS_PIN      GPIO_NUM_15   // IO15 对应CS
+#define DISPLAY_SPI_SCK_PIN     GPIO_NUM_16   // IO16 在SCK 
+#define DISPLAY_SPI_MOSI_PIN    GPIO_NUM_17   // IO17 对应MOSI
+#define DISPLAY_SPI_RESET_PIN   GPIO_NUM_18   // IO18 对应RESET
 
 #define DISPLAY_WIDTH   240
 #define DISPLAY_HEIGHT  240
@@ -59,7 +59,7 @@
 #define DISPLAY_OFFSET_X  0
 #define DISPLAY_OFFSET_Y  0
 
-#define DISPLAY_BACKLIGHT_PIN GPIO_NUM_36  //屏幕背光
+#define DISPLAY_BACKLIGHT_PIN   GPIO_NUM_36  //屏幕背光
 #define DISPLAY_BACKLIGHT_OUTPUT_INVERT false // true: 低电平点亮，false: 高电平点亮
 
 #define DISPLAY_SPI_SCLK_HZ     (40 * 1000 * 1000)
