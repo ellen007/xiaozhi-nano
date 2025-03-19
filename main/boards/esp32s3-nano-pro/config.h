@@ -62,6 +62,7 @@
 #define DISPLAY_BACKLIGHT_PIN   GPIO_NUM_36  //屏幕背光
 #define DISPLAY_BACKLIGHT_OUTPUT_INVERT false // true: 低电平点亮，false: 高电平点亮
 
+
 #define DISPLAY_SPI_SCLK_HZ     (40 * 1000 * 1000)
 
 #endif // _BOARD_CONFIG_H_
