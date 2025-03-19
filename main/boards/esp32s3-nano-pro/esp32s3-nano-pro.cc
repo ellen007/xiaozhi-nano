@@ -19,30 +19,29 @@
 #include "driver/gpio.h"
 #include "driver/spi_master.h"
 
-#define TAG "Esp32S3NanoPro"
+#define TAG "Esp32s3NanoPro"
 
 LV_FONT_DECLARE(font_puhui_20_4);
 LV_FONT_DECLARE(font_awesome_20_4);
 
 
 class CustomLcdDisplay : public SpiLcdDisplay {
-    public:
-        CustomLcdDisplay(esp_lcd_panel_io_handle_t io_handle, 
-                        esp_lcd_panel_handle_t panel_handle,
-                        int width,
-                        int height,
-                        int offset_x,
-                        int offset_y,
-                        bool mirror_x,
-                        bool mirror_y,
-                        bool swap_xy) 
-            : SpiLcdDisplay(io_handle, panel_handle, width, height, offset_x, offset_y, mirror_x, mirror_y, swap_xy,
-                        {
-                            .text_font = &font_puhui_20_4,
-                            .icon_font = &font_awesome_20_4,
-                            .emoji_font = font_emoji_64_init(),
-                        }) {
-    
+public:
+    CustomLcdDisplay(esp_lcd_panel_io_handle_t io_handle, 
+                    esp_lcd_panel_handle_t panel_handle,
+                    int width,
+                    int height,
+                    int offset_x,
+                    int offset_y,
+                    bool mirror_x,
+                    bool mirror_y,
+                    bool swap_xy) 
+        : SpiLcdDisplay(io_handle, panel_handle, width, height, offset_x, offset_y, mirror_x, mirror_y, swap_xy,
+                    {
+                        .text_font = &font_puhui_20_4,
+                        .icon_font = &font_awesome_20_4,
+                        .emoji_font = font_emoji_64_init(),
+                    }) {
 
         DisplayLockGuard lock(this);
         // 由于屏幕是圆的，所以状态栏需要增加左右内边距
@@ -51,13 +50,10 @@ class CustomLcdDisplay : public SpiLcdDisplay {
     }
 };
 
-class Esp32S3NanoPro : public WifiBoard {
+class Esp32s3NanoPro : public WifiBoard {
 private:
     i2c_master_bus_handle_t codec_i2c_bus_;
     Button boot_button_;
-    Button touch_button_; // 触摸按钮
-    Button volume_up_button_; // 音量加
-    Button volume_down_button_;  // 音量减
     Display* display_;
 
     void InitializeCodecI2c() {
@@ -110,13 +106,13 @@ private:
         ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true)); 
 
         display_ = new SpiLcdDisplay(io_handle, panel_handle,
-            DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_OFFSET_X, DISPLAY_OFFSET_Y, DISPLAY_MIRROR_X, DISPLAY_MIRROR_Y, DISPLAY_SWAP_XY,
-            {
-                .text_font = &font_puhui_20_4,
-                .icon_font = &font_awesome_20_4,
-                .emoji_font = font_emoji_64_init(),
-            });
-}
+                                    DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_OFFSET_X, DISPLAY_OFFSET_Y, DISPLAY_MIRROR_X, DISPLAY_MIRROR_Y, DISPLAY_SWAP_XY,
+                                    {
+                                        .text_font = &font_puhui_20_4,
+                                        .icon_font = &font_awesome_20_4,
+                                        .emoji_font = font_emoji_64_init(),
+                                    });
+    }
 
     void InitializeButtons() {
         boot_button_.OnClick([this]() {
@@ -125,42 +121,6 @@ private:
                 ResetWifiConfiguration();
             }
             app.ToggleChatState();
-        });
-        touch_button_.OnPressDown([this]() {
-            Application::GetInstance().StartListening();
-        });
-        touch_button_.OnPressUp([this]() {
-            Application::GetInstance().StopListening();
-        });
-
-        volume_up_button_.OnClick([this]() {
-            auto codec = GetAudioCodec();
-            auto volume = codec->output_volume() + 10;
-            if (volume > 100) {
-                volume = 100;
-            }
-            codec->SetOutputVolume(volume);
-            GetDisplay()->ShowNotification("音量 " + std::to_string(volume));
-        });
-
-        volume_up_button_.OnLongPress([this]() {
-            GetAudioCodec()->SetOutputVolume(100);
-            GetDisplay()->ShowNotification("最大音量");
-        });
-
-        volume_down_button_.OnClick([this]() {
-            auto codec = GetAudioCodec();
-            auto volume = codec->output_volume() - 10;
-            if (volume < 0) {
-                volume = 0;
-            }
-            codec->SetOutputVolume(volume);
-            GetDisplay()->ShowNotification("音量 " + std::to_string(volume));
-        });
-
-        volume_down_button_.OnLongPress([this]() {
-            GetAudioCodec()->SetOutputVolume(0);
-            GetDisplay()->ShowNotification("已静音");
         });
     }
 
@@ -172,18 +132,13 @@ private:
     }
 
 public:
-    Esp32S3NanoPro() : 
-        touch_button_(TOUCH_BUTTON_GPIO),
-        volume_up_button_(VOLUME_UP_BUTTON_GPIO),
-        volume_down_button_(VOLUME_DOWN_BUTTON_GPIO),
-        boot_button_(BOOT_BUTTON_GPIO){  
+    Esp32s3NanoPro() : boot_button_(BOOT_BUTTON_GPIO) {  
         InitializeCodecI2c();
         InitializeSpi();
         InitializeGc9a01Display();
         InitializeButtons();
         InitializeIot();
-        GetBacklight()->RestoreBrightness();
-
+        //GetBacklight()->RestoreBrightness();
     }
 
     virtual Led* GetLed() override {
@@ -194,7 +149,7 @@ public:
     virtual Display* GetDisplay() override {
         return display_;
     }
-
+    
     virtual Backlight* GetBacklight() override {
         static PwmBacklight backlight(DISPLAY_BACKLIGHT_PIN, DISPLAY_BACKLIGHT_OUTPUT_INVERT);
         return &backlight;
@@ -208,4 +163,4 @@ public:
     }
 };
 
-DECLARE_BOARD(Esp32S3NanoPro);
+DECLARE_BOARD(Esp32s3NanoPro);
