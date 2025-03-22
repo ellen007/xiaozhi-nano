@@ -24,8 +24,8 @@
 #define AUDIO_I2S_GPIO_MCLK      GPIO_NUM_6   // IO6 对应 MCLK
 #define AUDIO_I2S_GPIO_WS        GPIO_NUM_12  // IO12 对应 LRCK
 #define AUDIO_I2S_GPIO_BCLK      GPIO_NUM_14  // IO14 对应 SCLK
-#define AUDIO_I2S_GPIO_DIN       GPIO_NUM_11  // IO11 对应 DIN
-#define AUDIO_I2S_GPIO_DOUT      GPIO_NUM_13  // IO13 对应 DOUT
+#define AUDIO_I2S_GPIO_DIN       GPIO_NUM_13  // IO11 对应 DIN
+#define AUDIO_I2S_GPIO_DOUT      GPIO_NUM_11  // IO13 对应 DOUT
 
 //音频编解码 I2C 接口（ES8311）
 #define AUDIO_CODEC_I2C_SDA_PIN  GPIO_NUM_5   // IO05 对应SDA
@@ -60,7 +60,7 @@
 #define DISPLAY_OFFSET_Y  0
 
 #define DISPLAY_BACKLIGHT_PIN   GPIO_NUM_36  //屏幕背光
-#define DISPLAY_BACKLIGHT_OUTPUT_INVERT true // true: 低电平点亮，false: 高电平点亮
+#define DISPLAY_BACKLIGHT_OUTPUT_INVERT false // true: 低电平点亮，false: 高电平点亮
 
 
 #define DISPLAY_SPI_SCLK_HZ     (40 * 1000 * 1000)

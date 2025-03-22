@@ -25,6 +25,8 @@ LV_FONT_DECLARE(font_puhui_20_4);
 LV_FONT_DECLARE(font_awesome_20_4);
 
 
+
+
 class CustomLcdDisplay : public SpiLcdDisplay {
 public:
     CustomLcdDisplay(esp_lcd_panel_io_handle_t io_handle, 
@@ -55,6 +57,8 @@ private:
     i2c_master_bus_handle_t codec_i2c_bus_;
     Button boot_button_;
     Display* display_;
+
+
 
     void InitializeCodecI2c() {
         // Initialize I2C peripheral
@@ -131,14 +135,16 @@ private:
         thing_manager.AddThing(iot::CreateThing("Screen"));   
     }
 
+    
+
 public:
-    Esp32s3NanoPro() : boot_button_(BOOT_BUTTON_GPIO) {  
+    Esp32s3NanoPro() : 
+        boot_button_(BOOT_BUTTON_GPIO){  
         InitializeCodecI2c();
         InitializeSpi();
         InitializeGc9a01Display();
         InitializeButtons();
         InitializeIot();
-        //GetBacklight()->RestoreBrightness();
     }
 
     virtual Led* GetLed() override {
