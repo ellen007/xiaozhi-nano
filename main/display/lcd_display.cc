@@ -567,7 +567,7 @@ void LcdDisplay::SetupUI() {
     lv_obj_set_style_radius(content_, 0, 0);
     lv_obj_set_width(content_, LV_HOR_RES);
     lv_obj_set_flex_grow(content_, 1);
-    lv_obj_set_style_pad_all(content_, 5, 0);
+    lv_obj_set_style_pad_all(content_, 10, 0); //原来是5 改成了10
     lv_obj_set_style_bg_color(content_, current_theme.chat_background, 0);
     lv_obj_set_style_border_color(content_, current_theme.border, 0); // Border color for content
 
@@ -581,7 +581,7 @@ void LcdDisplay::SetupUI() {
 
     chat_message_label_ = lv_label_create(content_);
     lv_label_set_text(chat_message_label_, "");
-    lv_obj_set_width(chat_message_label_, LV_HOR_RES * 0.9); // 限制宽度为屏幕宽度的 90%
+    lv_obj_set_width(chat_message_label_, LV_HOR_RES * 0.90); // 限制宽度为屏幕宽度的 90%
     lv_label_set_long_mode(chat_message_label_, LV_LABEL_LONG_WRAP); // 设置为自动换行模式
     lv_obj_set_style_text_align(chat_message_label_, LV_TEXT_ALIGN_CENTER, 0); // 设置文本居中对齐
     lv_obj_set_style_text_color(chat_message_label_, current_theme.text, 0);

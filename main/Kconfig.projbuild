@@ -148,6 +148,8 @@ choice BOARD_TYPE
         bool "无名科技星智1.54(ML307)"
     config BOARD_TYPE_SENSECAP_WATCHER
         bool "SenseCAP Watcher"
+    config BOARD_TYPE_ESP32S3_NANO_PRO
+        bool "Nano猫猫头"
 endchoice
 
 choice DISPLAY_OLED_TYPE
