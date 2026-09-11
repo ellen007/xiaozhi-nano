@@ -6,6 +6,14 @@ config OTA_VERSION_URL
     help
         The application will access this URL to check for updates.
 
+config AUTO_FIRMWARE_UPGRADE
+    bool "Automatically install firmware updates"
+    default n
+    help
+        Allow the server version check to trigger a firmware download and reboot.
+        Disabled by default to preserve this device's custom firmware.
+        Activation, server time and connection settings are still retrieved.
+
 
 choice
     prompt "语言选择"

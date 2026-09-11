@@ -84,6 +84,7 @@ void Application::CheckNewVersion() {
         }
         retry_count = 0;
 
+#if CONFIG_AUTO_FIRMWARE_UPGRADE
         if (ota_.HasNewVersion()) {
             Alert(Lang::Strings::OTA_UPGRADE, Lang::Strings::UPGRADING, "happy", Lang::Sounds::P3_UPGRADE);
             // Wait for the chat state to be idle
@@ -133,7 +134,14 @@ void Application::CheckNewVersion() {
             return;
         }
 
-        // No new version, mark the current version as valid
+#else
+        if (ota_.HasNewVersion()) {
+            ESP_LOGI(TAG, "Automatic firmware upgrade disabled; keeping %s (server offers %s)",
+                     ota_.GetCurrentVersion().c_str(), ota_.GetFirmwareVersion().c_str());
+        }
+#endif
+
+        // Keep the current firmware valid even when an offered update is skipped.
         ota_.MarkCurrentVersionValid();
         std::string message = std::string(Lang::Strings::VERSION) + ota_.GetCurrentVersion();
         display->ShowNotification(message.c_str());
