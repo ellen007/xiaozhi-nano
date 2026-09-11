@@ -23,7 +23,7 @@
 python3 scripts/build.py esp32s3-nano-pro --name esp32s3-nano-pro-2026-n16r8 --language zh-CN
 ```
 
-N16R8 的 16 MB Flash、Octal PSRAM / 80 MHz 和 v2/16m 分区已由本次固定上游 defaults 提供，因此 `sdkconfig_append` 留空。语言和唤醒词通过构建参数选择。
+N16R8 的 16 MB Flash、Octal PSRAM / 80 MHz 和 v2/16m 分区已由本次固定上游 defaults 提供；`sdkconfig_append` 设置 `CONFIG_AUTO_FIRMWARE_UPGRADE=n`，关闭自动固件安装（包括服务端强制升级），保留激活、服务配置、资源更新和手动升级。语言和唤醒词通过构建参数选择。
 
 板型 `type` 与固件 `name` 已区分；首次迁移应核对分区和备份数据后通过串口烧录。服务端是否严格按自定义板型/变体路由 OTA 仍需验证，仅改名称不等于保证隔离。
 

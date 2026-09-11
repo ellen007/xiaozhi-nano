@@ -4,7 +4,9 @@
     "builds": [
         {
             "name": "esp32s3-nano-2026-n16r8",
-            "sdkconfig_append": []
+            "sdkconfig_append": [
+                "CONFIG_AUTO_FIRMWARE_UPGRADE=n"
+            ]
         }
     ]
 }

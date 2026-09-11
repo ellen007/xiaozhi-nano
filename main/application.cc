@@ -490,13 +490,18 @@ void Application::CheckNewVersion() {
         retry_delay = 10;  // Reset retry delay
 
         if (ota_->HasNewVersion()) {
+#if CONFIG_AUTO_FIRMWARE_UPGRADE
             if (UpgradeFirmware(ota_->GetFirmwareUrl(), ota_->GetFirmwareVersion())) {
                 return;  // This line will never be reached after reboot
             }
             // If upgrade failed, continue to normal operation
+#else
+            ESP_LOGI(TAG, "Automatic firmware upgrade disabled; skipping version %s",
+                     ota_->GetFirmwareVersion().c_str());
+#endif
         }
 
-        // No new version, mark the current version as valid
+        // Continuing with the current firmware: mark it as valid.
         ota_->MarkCurrentVersionValid();
         if (!ota_->HasActivationCode() && !ota_->HasActivationChallenge()) {
             // Exit the loop if done checking new version

@@ -6,6 +6,15 @@ config OTA_URL
     help
         The application will access this URL to check for new firmwares and server address.
 
+config AUTO_FIRMWARE_UPGRADE
+    bool "Automatically install firmware updates"
+    default n if BOARD_TYPE_ESP32S3_NANO || BOARD_TYPE_ESP32S3_NANO_PRO
+    default y
+    help
+        Install firmware updates returned by the OTA service during activation.
+        When disabled, newer and forced firmware updates are skipped. Activation,
+        server configuration, asset updates and explicit manual upgrades remain available.
+
 choice
     prompt "Flash Assets"
     default FLASH_DEFAULT_ASSETS if !USE_EMOTE_MESSAGE_STYLE
