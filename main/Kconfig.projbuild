@@ -158,6 +158,9 @@ choice BOARD_TYPE
         bool "SenseCAP Watcher"
     config BOARD_TYPE_ESP32S3_NANO_PRO
         bool "Nano猫猫头"
+    config BOARD_TYPE_ESP32S3_NANOCAT
+        bool "NanoCat V1.0 (2025-03-22)"
+        depends on IDF_TARGET_ESP32S3
 endchoice
 
 choice DISPLAY_OLED_TYPE
