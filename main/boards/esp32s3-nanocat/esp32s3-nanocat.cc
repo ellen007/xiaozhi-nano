@@ -37,6 +37,12 @@ private:
         config.glitch_ignore_cnt = 7;
         config.flags.enable_internal_pullup = true;
         ESP_ERROR_CHECK(i2c_new_master_bus(&config, &codec_i2c_bus_));
+        ESP_LOGI("NanoCat", "Codec bus idle: SDA(GPIO5)=%d SCL(GPIO4)=%d",
+                 gpio_get_level(AUDIO_CODEC_I2C_SDA_PIN), gpio_get_level(AUDIO_CODEC_I2C_SCL_PIN));
+        const esp_err_t probe = i2c_master_probe(codec_i2c_bus_, AUDIO_CODEC_ES8311_ADDR >> 1, 100);
+        ESP_LOGI("NanoCat", "ES8311 probe at 0x%02x: %s; SDA=%d SCL=%d",
+                 AUDIO_CODEC_ES8311_ADDR >> 1, esp_err_to_name(probe),
+                 gpio_get_level(AUDIO_CODEC_I2C_SDA_PIN), gpio_get_level(AUDIO_CODEC_I2C_SCL_PIN));
     }
 
     void InitializeDisplay() {
@@ -95,6 +101,7 @@ public:
     Esp32s3NanoCat() {
         InitializeCodecI2c();
         InitializeDisplay();
+        GetBacklight()->RestoreBrightness();
         InitializeButtons();
         auto& things = iot::ThingManager::GetInstance();
         things.AddThing(iot::CreateThing("Speaker"));
