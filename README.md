@@ -1,157 +1,114 @@
-# Xiaozhi Nano · 自制语音开发板
+# Xiaozhi Nano / NanoCat
 
-本升级分支 `upgrade/nanocat-v2.5.0-no-ota` 新增 **NanoCat V1.0（2025-03-22 接线）**，
-基于小智 v2.5.0 及原 nano-2026 修复。NanoCat 背光为 GPIO3，音频 RX13 / TX11，
-只有 BOOT 按钮，设备端固件升级全部禁用；具体构建和回退步骤见
-[NanoCat 说明](main/boards/esp32s3-nanocat/README.md)。以下 Nano / Nano Pro 的接线警告
-针对原有两款板，不代表 NanoCat 需要改线。新版仍须完成实板验证后才能作为稳定版使用。
+基于 [小智 ESP32](https://github.com/78/xiaozhi-esp32) 的自制语音设备项目。本分支以 **小智 v2.5.0** 和原 `nano-2026` 修复为基础，完成了 **NanoCat V1.0** 的接线适配、USB 升级限制和自定义猫脸表情迁移。
 
-基于 [小智 ESP32](https://github.com/78/xiaozhi-esp32) 的自制开发板固件适配项目，维护 **Nano** 与 **Nano Pro** 两款 ESP32-S3 开发板。
+**截至 2026-09-12：NanoCat 已编译、刷入并完成实际唤醒、连续聊天和猫脸显示测试。** 当前唤醒词为 **“Hi 喵喵”**。验证范围和已知问题见 [实测记录](main/boards/esp32s3-nanocat/VALIDATION.md)，不将短时测试视为长期稳定性保证。
 
-当前开发分支为 [`nano-2026`](https://github.com/ellen007/xiaozhi-nano/tree/nano-2026)，用于将板级代码迁移到新版小智。历史工程保留在 [`main`](https://github.com/ellen007/xiaozhi-nano/tree/main)，旧版应用功能和自定义资源尚未全部迁移。
+## 分支与版本
 
-> **当前为源码适配阶段，尚未提供经过实板验证的可烧录固件。**
-> 原配置中的 GPIO36 背光、Pro 的 GPIO37 SD_D2 与 N16R8 Octal PSRAM 存在冲突，需要核对实际 PCB 并处理接线。当前背光 PWM 默认关闭、SD 未挂载；软件关闭外设不会解除板上的物理负载。
-
-## 当前进度
-
-截至 2026-09-11，适配基于上游提交 [`184a688`](https://github.com/78/xiaozhi-esp32/commit/184a688cd04564c15f035cee09c0f61889fc8e9d)。
-
-| 项目 | 状态 |
+| 分支 | 用途 |
 | --- | --- |
-| Nano / Nano Pro 板级代码与构建注册 | 已加入 |
-| Nano / Nano Pro 自动固件升级 | 已关闭，保留联网激活和手动升级 |
-| 显示、音频、Wi-Fi、MCP 接口迁移 | 已按该上游版本更新 |
-| Pro 六颗 WS2812、音量键 | 已加入驱动，待实板验证 |
-| 上游主机测试 | 81 项通过，记录于 2026-09-11 |
-| 板型识别、补丁应用、格式检查 | 已通过 |
-| ESP-IDF 完整固件编译 | 待完成 |
-| 烧录、音频、屏幕、按键、网络及 OTA 实测 | 待完成 |
-| 硬件引脚冲突与供电发热排查 | 待完成 |
+| [`upgrade/nanocat-v2.5.0-no-ota`](https://github.com/ellen007/xiaozhi-nano/tree/upgrade/nanocat-v2.5.0-no-ota) | 当前 NanoCat v2.5.0 适配与猫脸表情 |
+| [`backup/nanocat-working-hi-miaomiao-20260912`](https://github.com/ellen007/xiaozhi-nano/tree/backup/nanocat-working-hi-miaomiao-20260912) | 已测试的旧版 1.5.1 源码、固件、配置和唤醒模型备份，提交 `a838986` |
+| [`nano-2026`](https://github.com/ellen007/xiaozhi-nano/tree/nano-2026) | 原 Nano / Nano Pro 新版适配基线 |
+| [`main`](https://github.com/ellen007/xiaozhi-nano/tree/main) | 历史工程，包含原来的 128 像素表情调用方案 |
 
-主机测试检查的是构建脚本等逻辑，不能代替目标固件编译和硬件测试。
+硬件和固件变体不同，不要仅凭屏幕外观选择板型。此分支的设备测试结果仅针对下面的 NanoCat 接线。
 
-## 选择你的开发板
+## NanoCat 硬件
 
-两款板均按 **ESP32-S3 N16R8（16 MB Flash / 8 MB PSRAM）** 配置，使用 ES8311 音频编解码器、GC9A01 240×240 圆屏。
+使用 **ESP32-S3-WROOM-1-N16R8**（16 MB Flash / 8 MB PSRAM）、**ES8311** 音频芯片和 **GC9A01 240×240 圆屏**，对应创建于 2025-03-07、更新于 2025-03-22 的 NanoCat V1.0 原理图。
 
-| 配置 | Nano | Nano Pro |
-| --- | --- | --- |
-| 板目录 | `esp32s3-nano` | `esp32s3-nano-pro` |
-| 固件变体 | `esp32s3-nano-2026-n16r8` | `esp32s3-nano-pro-2026-n16r8` |
-| ESP32 I2S 接收 RX | GPIO11 | GPIO13 |
-| ESP32 I2S 发送 TX | GPIO13 | GPIO11 |
-| 音量 + / - | GPIO40 / GPIO39 | GPIO40 / GPIO39 |
-| RGB 灯 | 默认关闭，数量待核对 | GPIO45，6 颗 WS2812 |
-| GPIO1 预留触摸 | 默认关闭 | 未启用 |
-| SD 卡 | 无驱动 | 保留引脚定义，未挂载 |
-| 背光 PWM | 默认关闭 | 默认关闭 |
+| 功能 | GPIO |
+| --- | --- |
+| ES8311 SDA / SCL | 5 / 4 |
+| 音频 MCLK / BCLK / WS | 6 / 14 / 12 |
+| ESP32 音频发送 TX / 接收 RX | 11 / 13 |
+| 功放使能 | 9，高电平有效 |
+| 屏幕 MOSI / SCLK / CS / DC / RESET | 17 / 16 / 15 / 7 / 18 |
+| 屏幕背光 | 3，高电平有效 |
+| BOOT 按钮 | 0，低电平有效 |
 
-**两款板的 I2S 接线不同，不能混刷。** RX/TX 方向均以 ESP32 为准；屏幕外观相同不代表板型相同。
+音频输入、输出均为 24 kHz；Flash 使用 DIO，PSRAM 使用 Octal 模式。触摸 GPIO8 暂未启用；不驱动原理图中的 GPIO36 LED，避免占用 N16R8 内存引脚。
 
-详细引脚和功能开关见 [Nano 配置](main/boards/esp32s3-nano/config.h)、[Nano Pro 配置](main/boards/esp32s3-nano-pro/config.h)。
+板型标识：`esp32s3-nanocat`；固件变体：`esp32s3-nanocat-usb-only`。
+详细配置见 [NanoCat 说明](main/boards/esp32s3-nanocat/README.md) 和 [引脚定义](main/boards/esp32s3-nanocat/config.h)。
 
-## 获取代码
+## 自定义猫脸表情
 
-在新目录中克隆本分支，保留原来的工程、旧固件和编译环境，方便比较与回退：
+已接入原 UI 素材中的 **21 张 128×128 透明 PNG**，覆盖待机、开心、大笑、生气、思考、困倦等状态。原始图片像素保持不变，按服务端情绪名称映射；未知名称回退到待机表情。
 
-```sh
-git clone --branch nano-2026 https://github.com/ellen007/xiaozhi-nano.git xiaozhi-nano-2026
-cd xiaozhi-nano-2026
-```
+- **黑色背景：** 保留原来的白色线条和彩色细节。
+- **白色背景：** 自动渲染为黑色单色线条，保留透明度和轮廓。
+- 根据主题自动切换，无需两份固件；重启保留已保存的主题。
 
-如果已经克隆了该分支，在工作区干净时更新：
+素材已纳入 Git：[表情目录](main/boards/esp32s3-nanocat/emoji/)、[文件映射与 SHA256](main/boards/esp32s3-nanocat/emoji/manifest.json)。本机原 UI 目录下另有 `NanoCat-新版表情备份-20260912`，包含图片、适配代码和 `黑白主题预览.html` 离线预览。
+
+## 构建
+
+要求 **ESP-IDF 6.0.1 及以上**，本次使用 **ESP-IDF 6.1 / Python 3.11**。旧版回退工程使用 IDF 5.3.2，应保留独立环境。
 
 ```sh
-git pull --ff-only
+git clone --branch upgrade/nanocat-v2.5.0-no-ota https://github.com/ellen007/xiaozhi-nano.git xiaozhi-nanocat
+cd xiaozhi-nanocat
 ```
 
-## 编译
-
-### 准备环境
-
-本分支要求 **ESP-IDF 6.0.1 或更高版本，优先使用 6.1**，不支持 ESP-IDF 5.x。
-
-Windows、macOS 和 Linux 均可使用。Windows 上建议在单独目录中安装所需 SDK，通过已配置的 ESP-IDF 终端执行命令；先核对旧环境版本，不直接覆盖原工程或复制旧的 `build/` 目录。
-
-在已激活的 ESP-IDF 环境中确认版本：
+加载 ESP-IDF 环境后核对版本并构建：
 
 ```sh
 idf.py --version
-python --version
+python scripts/build.py esp32s3-nanocat --name esp32s3-nanocat-usb-only --language zh-CN --wake-word wn9_himiaomiao_tts
 ```
 
-以下示例使用该环境中的 `python`；若本机命令名为 `python3`，相应替换即可。
+语言和唤醒词通过构建参数选择，不固定在板型 JSON 中。`Hi 喵喵` 对应 `wn9_himiaomiao_tts`。
 
-### 选择板型构建
+表情版应用为 **2,798,976 字节**，21 张 PNG 已嵌入应用；资源包约 **1.3 MB**，包含唤醒模型等资源。完整构建和 81 项主机测试已通过。构建产物来自所选板型，不能拿 Nano / Nano Pro 固件刷入 NanoCat。
 
-先查看可用板型：
+## 升级与回退
 
-```sh
-python scripts/build.py --list-boards
-```
+**NanoCat 仅通过 USB 安装固件。** 此板型不能开启 `FIRMWARE_UPGRADE`：自动安装、服务端强制安装和远程手动升级工具均已禁用，底层固件写入代码也不参与编译。
 
-**Nano Pro：**
+联网激活、获取服务器配置及资源包更新仍保留。修改 Git 代码不会自动更新设备。
 
-```sh
-python scripts/build.py esp32s3-nano-pro --name esp32s3-nano-pro-2026-n16r8 --language zh-CN
-```
+首次由旧版迁移到 v2 分区时：
 
-**Nano：**
+1. 完整读取并校验当前设备的 16 MB Flash，备份源码、构建配置及固件。
+2. 使用本板构建生成的启动、分区、OTA 元数据、应用和资源文件，按生成的地址刷写。
+3. 保留 NVS 配网与绑定数据；不要用带填充的合并镜像覆盖 NVS 区域。
+4. 检查启动、唤醒、回复播放及屏幕显示，再进行日常使用测试。
 
-```sh
-python scripts/build.py esp32s3-nano --name esp32s3-nano-2026-n16r8 --language zh-CN
-```
+旧版应用位于 `0x100000`，新版应用位于 `0x20000`；布局已经改变。**切换 Git 分支只恢复代码，设备回退还需恢复旧分区及配套固件，或完整旧镜像。** 详见 [回退说明](main/boards/esp32s3-nanocat/README.md#migration-and-rollback)。
 
-按实际硬件选择一个命令。构建脚本会配置目标芯片、板型和固件变体。语言与唤醒词属于用户构建选项，不固化在板型 JSON 中；其他参数可运行 `python scripts/build.py --help` 查看。
+本次迁移前已保存完整设备镜像，并确认其中的应用与唤醒模型逐字节匹配旧版测试备份。完整镜像包含 Wi-Fi 和绑定信息，只保存在本机，不提交到 Git。
 
-当前基线的 16 MB Flash、Octal PSRAM / 80 MHz 和 `partitions/v2/16m.csv` 已由项目默认配置提供。更换模组或升级上游后，需要重新核对这些设置。
+## 验证与限制
 
-成功构建后，脚本会生成 `build/merged-binary.bin`。本分支目前**尚未验证生成该固件**，上述命令是操作说明，不是成功编译记录。
+| 项目 | 结果 |
+| --- | --- |
+| NanoCat 完整构建、81 项主机测试、格式检查 | 通过 |
+| 原 Nano 参考板型回归构建 | 通过，保留原有手动升级能力 |
+| USB 刷写、固件哈希与分区容量检查 | 通过 |
+| Hi 喵喵唤醒、麦克风转写、多轮回复 | 实测通过 |
+| 自定义猫脸及黑色主题 | 用户确认显示正常 |
+| 白色主题 | 自动着色已实现并编译，尚无单独明确的实板确认 |
+| 冷启动反复测试、BOOT 打断、重连、长期运行 | 尚未完成专项验证 |
 
-## 烧录前与首次测试
+v2.5.0 首次迁移启动曾记录一次明确欠压复位，随后恢复聊天；表情版刷入后约 100 秒观察未见欠压、崩溃或断言。保留启动阶段功放静音、10% 背光以及有限次数的 I2C 总线恢复，音量沿用用户保存值。此前间歇性供电与 I2C 故障的根因尚未完全确定。
 
-1. 核对实际 PCB、模组型号、I2S 接线，处理 GPIO36 / GPIO37 冲突及异常发热。
-2. 备份原固件和需要保留的数据，核对新旧分区布局。
-3. 使用与本板匹配的构建产物进行首次串口烧录，再检查启动日志、Flash / PSRAM 初始化。
-4. 逐项验证低音量录放音、屏幕方向、灯串、按键、配网、唤醒与打断。
-5. 最后核对服务端按自定义 `type` / `name` 分发固件的行为，再按需验证手动 OTA。
+## Nano / Nano Pro
 
-首次从旧工程迁移时，不直接套用其他开发板的预编译固件，也不假定旧 OTA 包与当前分区兼容。具体烧录端口与地址应以本次构建产物和实际连接为准。
+仓库仍保留这两款板的适配代码，但其接线不同于 NanoCat：原 Nano 的音频 RX11 / TX13；Nano Pro 为 RX13 / TX11，另有音量键、灯串等外设。原 GPIO36 背光、Pro GPIO37 SD 接线与 N16R8 内存存在冲突，相关功能仍受限制，不能套用 NanoCat 的实测结论。
 
-## 固件升级策略
-
-Nano 和 Nano Pro 的构建配置均设置 `CONFIG_AUTO_FIRMWARE_UPGRADE=n`。联网时仍请求 OTA 服务以完成激活、获取服务配置和时间，但跳过自动固件安装，包括服务端返回 `force: 1` 的情况。升级检查不会从 GitHub 自动拉取代码。
-
-手动固件升级工具和资源包更新仍保留。此设置需要重新编译并烧录后才对真机生效，已经安装的旧固件不会因仓库修改而改变。其他板型保持上游自动升级的默认行为。
-
-## 已知限制
-
-- **背光与内存引脚：** 原定义 `DISPLAY_BACKLIGHT_PIN=GPIO36` 与 N16R8 Octal PSRAM 冲突。当前不创建 PWM，因此屏幕可能不亮；直接打开该引脚的背光开关会触发编译期检查。应先解决硬件接线，再更新板型或变体。
-- **Pro SD 卡：** SD_D2=GPIO37 同样占用内存引脚，当前没有挂载代码。仅禁用驱动不能消除卡槽、上拉等实际负载。
-- **电池电量：** Pro 的 GPIO8 分压采样对应 5V 电源轨，不能直接推算电芯剩余电量，因此未启用电池百分比。
-- **预留触摸：** GPIO1 的实际触摸方案仍需确认。数字按键驱动不能直接替代原生电容触摸驱动。
-- **设备端 AEC：** 未启用，需要经验证的回采链路与声学条件。
-- **供电发热：** 固件适配不能修复短路、错料、散热不足或电源切换问题，应单独检查供电与焊接。
-
-## 项目文档
-
-- [Nano 2026 适配与维护说明](docs/nano2026.md)
 - [Nano 开发板说明](main/boards/esp32s3-nano/README.md)
 - [Nano Pro 开发板说明](main/boards/esp32s3-nano-pro/README.md)
-- [小智自定义开发板教程](docs/custom-board_zh.md)
+- [原 Nano 2026 适配记录](docs/nano2026.md)
+
+## 文档与许可证
+
+- [NanoCat 实测记录与固件校验值](main/boards/esp32s3-nanocat/VALIDATION.md)
+- [自定义开发板教程](docs/custom-board.md)
 - [音频模块说明](main/audio/README.md)
 - [MCP 协议](docs/mcp-protocol.md)
-- [上游中文项目介绍](README_zh.md)（通用功能介绍，不代表 Nano 已实现全部能力）
+- [上游中文介绍](README_zh.md)
 
-## 后续维护
-
-`nano-2026` 用于当前适配开发，`main` 保留历史版本。同步上游时，在适配分支中审查、合并并重新验证；需要合并回历史分支时另行安排。
-
-硬件改版时应建立独立板型或固件变体，记录接线变化，保持 OTA 身份明确。修改引脚前先核对原理图、PCB 和外设占用。
-
-## 上游与许可证
-
-本项目基于 [78/xiaozhi-esp32](https://github.com/78/xiaozhi-esp32)，感谢上游及相关开源组件的贡献者。
-
-保留原项目的 [MIT 许可证及版权声明](LICENSE)。各第三方组件遵循其各自许可证。
+保留原项目的 [MIT 许可证及版权声明](LICENSE)。第三方组件和素材遵循各自许可证。
