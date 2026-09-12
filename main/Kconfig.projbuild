@@ -6,8 +6,18 @@ config OTA_URL
     help
         The application will access this URL to check for new firmwares and server address.
 
+config FIRMWARE_UPGRADE
+    bool "Allow device-side firmware installation"
+    depends on !BOARD_TYPE_ESP32S3_NANOCAT
+    default y
+    help
+        Allow firmware downloads and writes, including remote manual upgrades.
+        NanoCat builds require USB flashing. Activation and server configuration
+        checks remain available when this option is disabled.
+
 config AUTO_FIRMWARE_UPGRADE
     bool "Automatically install firmware updates"
+    depends on FIRMWARE_UPGRADE
     default n if BOARD_TYPE_ESP32S3_NANO || BOARD_TYPE_ESP32S3_NANO_PRO
     default y
     help
@@ -395,6 +405,10 @@ choice BOARD_TYPE
 
     config BOARD_TYPE_ESP32S3_NANO_PRO
         bool "Nano Pro (GitHub legacy wiring)"
+        depends on IDF_TARGET_ESP32S3
+
+    config BOARD_TYPE_ESP32S3_NANOCAT
+        bool "NanoCat (March 2025 N16R8, USB updates only)"
         depends on IDF_TARGET_ESP32S3
 
     config BOARD_TYPE_XINGZHI_ABS_2_0

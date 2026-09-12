@@ -1,5 +1,11 @@
 # Xiaozhi Nano · 自制语音开发板
 
+本升级分支 `upgrade/nanocat-v2.5.0-no-ota` 新增 **NanoCat V1.0（2025-03-22 接线）**，
+基于小智 v2.5.0 及原 nano-2026 修复。NanoCat 背光为 GPIO3，音频 RX13 / TX11，
+只有 BOOT 按钮，设备端固件升级全部禁用；具体构建和回退步骤见
+[NanoCat 说明](main/boards/esp32s3-nanocat/README.md)。以下 Nano / Nano Pro 的接线警告
+针对原有两款板，不代表 NanoCat 需要改线。新版仍须完成实板验证后才能作为稳定版使用。
+
 基于 [小智 ESP32](https://github.com/78/xiaozhi-esp32) 的自制开发板固件适配项目，维护 **Nano** 与 **Nano Pro** 两款 ESP32-S3 开发板。
 
 当前开发分支为 [`nano-2026`](https://github.com/ellen007/xiaozhi-nano/tree/nano-2026)，用于将板级代码迁移到新版小智。历史工程保留在 [`main`](https://github.com/ellen007/xiaozhi-nano/tree/main)，旧版应用功能和自定义资源尚未全部迁移。

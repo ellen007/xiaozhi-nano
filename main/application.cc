@@ -1206,6 +1206,10 @@ void Application::Reboot() {
 }
 
 bool Application::UpgradeFirmware(const std::string& url, const std::string& version) {
+#if !CONFIG_FIRMWARE_UPGRADE
+    ESP_LOGW(TAG, "Device firmware installation disabled; use USB flashing");
+    return false;
+#else
     auto& board = Board::GetInstance();
     auto display = board.GetDisplay();
 
@@ -1262,6 +1266,7 @@ bool Application::UpgradeFirmware(const std::string& url, const std::string& ver
         Reboot();
         return true;
     }
+#endif
 }
 
 void Application::WakeWordInvoke(const std::string& wake_word) {
