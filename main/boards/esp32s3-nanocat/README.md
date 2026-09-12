@@ -36,6 +36,20 @@ This selects “Hi 喵喵”. Language and wake-word choices are build parameter
 not fixed board configuration. Keep DIO flash mode as in the tested legacy
 firmware. Project defaults supply 16 MB flash, octal PSRAM and v2/16m partitions.
 
+## Custom cat expressions
+
+The 21 user-provided transparent 128x128 PNGs in `emoji/` are embedded only
+for NanoCat. `emoji/manifest.json` records original filenames and checksums.
+`NanoCatDisplay` maps server emotion names to these images with a neutral
+fallback. The image descriptors are persistent; changing an emotion does not
+allocate another image buffer in the application.
+
+Dark backgrounds preserve the original white artwork and colored accents.
+Light backgrounds use LVGL's opaque black recoloring while retaining the PNG
+alpha, producing a monochrome version with the same silhouette. The current
+theme is loaded from NVS and both startup and later theme changes apply the
+matching treatment. No second firmware or duplicate raster set is required.
+
 ## Device updates and recovery
 
 `FIRMWARE_UPGRADE` cannot be enabled for this board. The firmware download/write

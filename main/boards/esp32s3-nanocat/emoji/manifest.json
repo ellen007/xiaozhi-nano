@@ -1,0 +1,107 @@
+{
+  "neutral": {
+    "source": "emoji_1f636_128_128x128.png",
+    "file": "nanocat_neutral.png",
+    "sha256": "518d6304f63fa593aff34508c5dd7e8c2c58a36473c18b81330c89cf9e94fe20"
+  },
+  "happy": {
+    "source": "emoji_1f642_128_128x128.png",
+    "file": "nanocat_happy.png",
+    "sha256": "4bf178befbcc4407d293e6233eddb7a324db76eb40427a6365eddb3a38ce6088"
+  },
+  "laughing": {
+    "source": "emoji_1f606_128_128x128.png",
+    "file": "nanocat_laughing.png",
+    "sha256": "7de15f73b7e433812eb306c3a3d4bbcf3de8cf5fb01c38b6c2b31f2c24dc0842"
+  },
+  "funny": {
+    "source": "emoji_1f602_128_128x128.png",
+    "file": "nanocat_funny.png",
+    "sha256": "306cc0766a7fbda416a6e677f230db3e40efadc1c862b361cd1563c98db80b4c"
+  },
+  "sad": {
+    "source": "emoji_1f614_128_128x128.png",
+    "file": "nanocat_sad.png",
+    "sha256": "40c9603ea68b74eaf69dac346c99478526c65049e8c9cc78473a94e64100ee12"
+  },
+  "angry": {
+    "source": "emoji_1f620_128_128x128.png",
+    "file": "nanocat_angry.png",
+    "sha256": "e7347e9cd0ef66776288ea8a09938e2220110f6c26fe458e065f7e2fee2983f1"
+  },
+  "crying": {
+    "source": "emoji_1f62d_128_128x128.png",
+    "file": "nanocat_crying.png",
+    "sha256": "9cf0740d584e5c781b13c56d3b3f748f2b6fe1f024742dbb1a85ff460f86453c"
+  },
+  "loving": {
+    "source": "emoji_1f60d_128_128x128.png",
+    "file": "nanocat_loving.png",
+    "sha256": "b9fcb60cec3ff5a0f8c63f5f61b6227d8524241f1171a71ac3245d3087faf8d6"
+  },
+  "embarrassed": {
+    "source": "emoji_1f633_128_128x128.png",
+    "file": "nanocat_embarrassed.png",
+    "sha256": "98e88319fae7a5143849193560fc050ef92c65182dd5fa480c3596920a1bab21"
+  },
+  "surprised": {
+    "source": "emoji_1f62f_128_128x128.png",
+    "file": "nanocat_surprised.png",
+    "sha256": "9b33361d7d1ed84f1961dea7fe53d2718c9e2a207bb8fcdf77d4f99ebd283b4d"
+  },
+  "shocked": {
+    "source": "emoji_1f631_128_128x128.png",
+    "file": "nanocat_shocked.png",
+    "sha256": "2a8abd6a33fd5e50ad18abed609e3f21d424dab5d57edcf71428a2dd5ba099d3"
+  },
+  "thinking": {
+    "source": "emoji_1f914_128_128x128.png",
+    "file": "nanocat_thinking.png",
+    "sha256": "85fbd59620820db0211e98973072a3c7a7b358f887aef0bc7385e22ccc8e95e4"
+  },
+  "winking": {
+    "source": "emoji_1f609_128_128x128.png",
+    "file": "nanocat_winking.png",
+    "sha256": "60e83fa2e50ff7bc23ab8f3e3108d66d8127be686c8378ca64312387a6bef2cf"
+  },
+  "cool": {
+    "source": "emoji_1f60e_128_128x128.png",
+    "file": "nanocat_cool.png",
+    "sha256": "2cb93ab2bdc8df22953d14103f9caafcdbffbb45ba8c3efe17f689a5199100d6"
+  },
+  "relaxed": {
+    "source": "emoji_1f60c_128_128x128.png",
+    "file": "nanocat_relaxed.png",
+    "sha256": "532b7fe174badb570823d85133218ad4ac65df46910c0c269c1305313bfe6042"
+  },
+  "delicious": {
+    "source": "emoji_1f924_128_128x128.png",
+    "file": "nanocat_delicious.png",
+    "sha256": "6b16d231bef888aa9a6781a2c73e379d5821841c1b95c7fee03af5e5f3f7119b"
+  },
+  "kissy": {
+    "source": "emoji_1f618_128_128x128.png",
+    "file": "nanocat_kissy.png",
+    "sha256": "0fdb271611e212e90debc0c2bba0751a03df13ece5d912ace3218b71a113ac8c"
+  },
+  "confident": {
+    "source": "emoji_1f60f_128_128x128.png",
+    "file": "nanocat_confident.png",
+    "sha256": "12235d19b6e956cf28587eb289054e783c7004e7eae60f85326d81ca674fb861"
+  },
+  "sleepy": {
+    "source": "emoji_1f634_128_128x128.png",
+    "file": "nanocat_sleepy.png",
+    "sha256": "591f429ea40b7ab727638e2ec08f85f9cd38d64ed6ab2968edc17d8b3563f7f1"
+  },
+  "silly": {
+    "source": "emoji_1f61c_128_128x128.png",
+    "file": "nanocat_silly.png",
+    "sha256": "14d9a6ba582511542faf63a4f9875a4a642ce062c4bed64030cba1387b964de6"
+  },
+  "confused": {
+    "source": "emoji_1f644_128_128x128.png",
+    "file": "nanocat_confused.png",
+    "sha256": "b16f663fb2dba5f5529f72df7365ff2149aab8f4c41ccf75f1728353e9e23861"
+  }
+}

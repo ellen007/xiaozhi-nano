@@ -1120,6 +1120,14 @@ idf_component_register(SRCS ${SOURCES}
                         ${MAIN_PRIV_REQUIRES_EXTRA}
                     )
 
+if(CONFIG_BOARD_TYPE_ESP32S3_NANOCAT)
+    file(GLOB NANOCAT_EMOJI_FILES CONFIGURE_DEPENDS
+        "${CMAKE_CURRENT_SOURCE_DIR}/boards/esp32s3-nanocat/emoji/nanocat_*.png")
+    foreach(EMOJI_FILE IN LISTS NANOCAT_EMOJI_FILES)
+        target_add_binary_data(${COMPONENT_LIB} "${EMOJI_FILE}" BINARY)
+    endforeach()
+endif()
+
 # Keep project-owned C++ on GNU C++23. ESP-IDF 6 may default to a newer
 # dialect; pin the baseline so main/ does not depend on it.
 if(NOT CMAKE_BUILD_EARLY_EXPANSION)
