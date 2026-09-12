@@ -47,3 +47,26 @@ The old working firmware remains the rollback baseline.
 Local build/flash evidence is under `D:/GitHub/nano-build-tools/` and
 `D:/GitHub/nano-device-backup/`; candidate binaries and their exact manifest
 are in `nanocat-v2.5.0-candidate-20260912` under the latter directory.
+
+
+## Custom expressions (2026-09-12)
+
+- Added 21 original transparent 128x128 PNGs with source checksum mapping.
+- Complete NanoCat build, 81 host tests and clang-format checks passed.
+- Application 2,798,976 bytes, below the 4,128,768-byte OTA slot limit.
+- All 21 source PNG byte sequences verified in the linked application.
+- Existing assets SHA256 unchanged; Hi Miaomiao and firmware update disablement verified.
+- Only the application at 0x20000 was flashed; esptool hash verification passed.
+- Startup loaded theme `dark`; the user confirmed the cat face displays normally.
+- Multiple conversations completed during approximately 100 seconds of capture,
+  with no brownout, panic or assertion observed.
+- Light-theme monochrome recoloring is implemented and compiled, but the user's
+  response did not separately identify a white-background hardware check.
+
+Application SHA256:
+`c4730e107516a170d034845b2f6178a0a7d16a31642095c4b84a171c8f2a6449`
+
+Source commit: `c4bdf3b`. Firmware/ELF/manifest remain under the local backup
+folder `nanocat-cat-expressions-20260912`. Material backups and an offline
+HTML preview were also saved to the user's UI directory without modifying
+original drawings. All 21 copied PNG hashes match the source manifest.
