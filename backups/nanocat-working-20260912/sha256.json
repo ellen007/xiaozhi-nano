@@ -1,0 +1,34 @@
+{
+  "application.bin": {
+    "size": 4240496,
+    "sha256": "fb0bcda110a2470aa684137b08bcd9714ceee469e0ce3ae2d0cb2e3928361745"
+  },
+  "hi-miaomiao-model.bin": {
+    "size": 291039,
+    "sha256": "c0ec49f0a286db12294803dc6b9c2bdb868d4af8a67f278370960786b606d6b5"
+  },
+  "sdkconfig.snapshot": {
+    "size": 87521,
+    "sha256": "c778b206d5685b4d066c24095f5c6921c5713453910a975e32fa949a0f704f79"
+  },
+  "sdkconfig.board.defaults": {
+    "size": 178,
+    "sha256": "f5b1e1acde95c4d22aed518c3d84a901abad1a152c66328b8ab299bf66694a9b"
+  },
+  "dependencies.lock.snapshot": {
+    "size": 9587,
+    "sha256": "b6e07abe99e9c4d83e718a1e2de1831056b4409d5c0872852d41dc28ec190800"
+  },
+  "bootloader.bin": {
+    "size": 16352,
+    "sha256": "dd986332977b9e2d35fcec9bea356a9e737ce3c72a27845854d0dc52cf1682d2"
+  },
+  "partition-table.bin": {
+    "size": 3072,
+    "sha256": "4d122ca60c7321c2c4cb393d3b612908263c2c860e92edd43036edbfd1c762e0"
+  },
+  "ota_data_initial.bin": {
+    "size": 8192,
+    "sha256": "7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f"
+  }
+}

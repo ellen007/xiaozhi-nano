@@ -12,7 +12,7 @@
 #define BOOT_BUTTON_GPIO         GPIO_NUM_0   //boot 打断对话
 #define POWER_ADC_PIN            GPIO_NUM_8   //电源电压
 #define TOUCH_BUTTON_GPIO        GPIO_NUM_1   //预留的touch 
-#define BUILTIN_LED_GPIO         GPIO_NUM_21  //电源指示灯？ 预留的 还没做电路
+#define BUILTIN_LED_GPIO         GPIO_NUM_21  //?
 
 
 //normal pins
@@ -20,7 +20,7 @@
 #define VOLUME_DOWN_BUTTON_GPIO  GPIO_NUM_39  //音量减
 #define RGB_LED_GPIO             GPIO_NUM_45  //RGB灯
 
-
+//音频编解码 I2S 接口
 #define AUDIO_I2S_GPIO_MCLK      GPIO_NUM_6   // IO6 对应 MCLK
 #define AUDIO_I2S_GPIO_WS        GPIO_NUM_12  // IO12 对应 LRCK
 #define AUDIO_I2S_GPIO_BCLK      GPIO_NUM_14  // IO14 对应 SCLK

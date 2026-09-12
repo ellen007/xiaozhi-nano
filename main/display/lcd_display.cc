@@ -319,7 +319,7 @@ void LcdDisplay::SetupUI() {
     emotion_label_ = lv_label_create(status_bar_);
     lv_obj_set_style_text_font(emotion_label_, &font_awesome_30_4, 0);
     lv_obj_set_style_text_color(emotion_label_, current_theme.text, 0);
-    lv_label_set_text(emotion_label_, FONT_AWESOME_CAT);
+    lv_label_set_text(emotion_label_, FONT_AWESOME_AI_CHIP);
     lv_obj_set_style_margin_right(emotion_label_, 5, 0); // 添加右边距，与后面的元素分隔
 
     notification_label_ = lv_label_create(status_bar_);
@@ -577,7 +577,7 @@ void LcdDisplay::SetupUI() {
     emotion_label_ = lv_label_create(content_);
     lv_obj_set_style_text_font(emotion_label_, &font_awesome_30_4, 0);
     lv_obj_set_style_text_color(emotion_label_, current_theme.text, 0);
-    lv_label_set_text(emotion_label_, FONT_AWESOME_CAT);
+    lv_label_set_text(emotion_label_,FONT_AWESOME_AI_CHIP);
 
     chat_message_label_ = lv_label_create(content_);
     lv_label_set_text(chat_message_label_, "");
@@ -643,17 +643,17 @@ void LcdDisplay::SetEmotion(const char* emotion) {
     };
 
     static const std::vector<Emotion> emotions = {
-        {"🐣", "neutral"},
-        {"😊", "happy"},
+        {"😶", "neutral"},
+        {"🙂", "happy"},
         {"😆", "laughing"},
-        {"🤣", "funny"},
+        {"😂", "funny"},
         {"😔", "sad"},
-        {"😾", "angry"},
+        {"😠", "angry"},
         {"😭", "crying"},
-        {"🥰", "loving"},
+        {"😍", "loving"},
         {"😳", "embarrassed"},
-        {"🤯", "surprised"},
-        {"🙀", "shocked"},
+        {"😯", "surprised"},
+        {"😱", "shocked"},
         {"🤔", "thinking"},
         {"😉", "winking"},
         {"😎", "cool"},
@@ -663,7 +663,7 @@ void LcdDisplay::SetEmotion(const char* emotion) {
         {"😏", "confident"},
         {"😴", "sleepy"},
         {"😜", "silly"},
-        {"😕", "confused"}
+        {"🙄", "confused"}
     };
     
     // 查找匹配的表情
@@ -681,7 +681,7 @@ void LcdDisplay::SetEmotion(const char* emotion) {
     if (it != emotions.end()) {
         lv_label_set_text(emotion_label_, it->icon);
     } else {
-        lv_label_set_text(emotion_label_, "🐣");
+        lv_label_set_text(emotion_label_, "😶");
     }
 }
 

@@ -16,6 +16,7 @@
 #include <driver/gpio.h>
 #include <arpa/inet.h>
 #include <esp_app_desc.h>
+#include <esp_system.h>
 
 #define TAG "Application"
 
@@ -552,7 +553,10 @@ void Application::OnClockTimer() {
         // SystemInfo::PrintRealTimeStats(pdMS_TO_TICKS(1000));
         int free_sram = heap_caps_get_free_size(MALLOC_CAP_INTERNAL);
         int min_free_sram = heap_caps_get_minimum_free_size(MALLOC_CAP_INTERNAL);
-        ESP_LOGI(TAG, "Free internal: %u minimal internal: %u", free_sram, min_free_sram);
+        // Repeat the boot reason because native USB can reconnect after early boot logs.
+        ESP_LOGI(TAG, "Free internal: %u minimal internal: %u; boot reset reason: %d; volume: %d",
+                 free_sram, min_free_sram, static_cast<int>(esp_reset_reason()),
+                 Board::GetInstance().GetAudioCodec()->output_volume());
 
         // If we have synchronized server time, set the status to clock "HH:MM" if the device is idle
         if (ota_.HasServerTime()) {
